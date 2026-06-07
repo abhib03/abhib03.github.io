@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abhishek Bharadwaj — Embedded Systems Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0c0f;
+    --surface: #111318;
+    --border: #1e2128;
+    --accent: #00e5a0;
+    --accent2: #0af;
+    --muted: #4a5060;
+    --text: #d8dde8;
+    --heading: #f0f4ff;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Syne', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,160,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,160,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: -20%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0,229,160,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 40px;
+    background: rgba(10,12,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--sans);
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--heading);
+    letter-spacing: -0.5px;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-resume {
+    background: transparent;
+    color: var(--accent) !important;
+    border: 1px solid rgba(0,229,160,0.35);
+    padding: 6px 14px;
+    border-radius: 3px;
+    transition: background 0.2s, color 0.2s !important;
+  }
+
+  .nav-resume:hover {
+    background: rgba(0,229,160,0.1) !important;
+    color: var(--accent) !important;
+  }
+
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 80px;
+  }
+
+  .hero-tag {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: var(--sans);
+    font-size: clamp(42px, 7vw, 80px);
+    font-weight: 800;
+    color: var(--heading);
+    line-height: 1.0;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.8;
+    margin-bottom: 40px;
+  }
+
+  .hero-links {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 22px;
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+    font-weight: 700;
+  }
+
+  .btn-primary:hover {
+    background: #00ffb3;
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .btn-resume {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid rgba(0,229,160,0.4);
+    font-weight: 500;
+  }
+
+  .btn-resume:hover {
+    background: rgba(0,229,160,0.08);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  section {
+    padding: 80px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .skill-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .skill-card:hover {
+    border-color: rgba(0,229,160,0.3);
+    transform: translateY(-2px);
+  }
+
+  .skill-card h3 {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tag {
+    background: rgba(0,229,160,0.07);
+    border: 1px solid rgba(0,229,160,0.15);
+    color: var(--text);
+    padding: 3px 10px;
+    border-radius: 3px;
+    font-size: 11px;
+  }
+
+  .projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .project-card:hover { border-color: rgba(0,229,160,0.25); }
+  .project-card:hover::before { opacity: 1; }
+
+  .project-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+
+  .project-header h3 {
+    font-family: var(--sans);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--heading);
+  }
+
+  .project-date {
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+    margin-top: 3px;
+  }
+
+  .project-desc {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 16px;
+    line-height: 1.7;
+  }
+
+  .project-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .project-bullets li {
+    font-size: 12px;
+    color: var(--text);
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .project-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 10px;
+  }
+
+  .project-footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .chip {
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--accent2);
+    background: rgba(0,170,255,0.08);
+    border: 1px solid rgba(0,170,255,0.15);
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+
+  .gh-link {
+    margin-left: auto;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.2s;
+  }
+
+  .gh-link:hover { color: var(--accent); }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .contact-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.2s;
+  }
+
+  .contact-item:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .contact-icon { font-size: 18px; width: 36px; text-align: center; }
+  .contact-meta { font-size: 11px; color: var(--muted); }
+  .contact-val { font-size: 13px; }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero > * {
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards;
+  }
+
+  .hero > *:nth-child(1) { animation-delay: 0.1s; }
+  .hero > *:nth-child(2) { animation-delay: 0.2s; }
+  .hero > *:nth-child(3) { animation-delay: 0.35s; }
+  .hero > *:nth-child(4) { animation-delay: 0.5s; }
+
+  .cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background: var(--accent);
+    margin-left: 4px;
+    vertical-align: middle;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink { 50% { opacity: 0; } }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">AB<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a class="nav-resume" href="Abhishek_Bharadwaj_Resume.pdf" download>↓ Resume</a></li>
+  </ul>
+</nav>
+
+<main>
+  <div class="hero" id="about">
+    <div class="hero-tag">Embedded Systems · Firmware Engineering</div>
+    <h1>Abhishek<br><em>Bharadwaj</em></h1>
+    <p class="hero-sub">
+      Electronics &amp; Instrumentation Engineering student at SJCE, Mysuru.
+      Building bare-metal firmware, register-level drivers, and real-time embedded systems from the ground up.
+      <span class="cursor"></span>
+    </p>
+    <div class="hero-links">
+      <a class="btn btn-primary" href="#projects">View Projects</a>
+      <a class="btn btn-ghost" href="https://github.com/abhib03" target="_blank">⎇ github.com/abhib03</a>
+      <a class="btn btn-resume" href="Abhishek_Bharadwaj_Resume.pdf" download>↓ Download Resume</a>
+    </div>
+  </div>
+
+  <section id="skills">
+    <div class="section-label">Technical Skills</div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h3>Languages</h3>
+        <div class="skill-tags">
+          <span class="tag">C</span>
+          <span class="tag">C++</span>
+          <span class="tag">Embedded C</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>Platforms</h3>
+        <div class="skill-tags">
+          <span class="tag">STM32F411CE</span>
+          <span class="tag">ARM Cortex-M4</span>
+          <span class="tag">Raspberry Pi Zero 2W</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>Protocols</h3>
+        <div class="skill-tags">
+          <span class="tag">SPI</span>
+          <span class="tag">I2C</span>
+          <span class="tag">UART/USART</span>
+          <span class="tag">1-Wire</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>Tools & Debug</h3>
+        <div class="skill-tags">
+          <span class="tag">STM32CubeIDE</span>
+          <span class="tag">ST-LINK SWD</span>
+          <span class="tag">Oscilloscope</span>
+          <span class="tag">Git</span>
+          <span class="tag">Linux</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>Embedded Skills</h3>
+        <div class="skill-tags">
+          <span class="tag">Register-level Programming</span>
+          <span class="tag">FreeRTOS</span>
+          <span class="tag">NVIC/EXTI</span>
+          <span class="tag">Sensor Interfacing</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-label">Projects</div>
+    <div class="projects-list">
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3>Bare-Metal Driver Development — STM32F411CE</h3>
+          <div class="project-date">Dec 2025</div>
+        </div>
+        <p class="project-desc">Register-level GPIO, EXTI, and peripheral drivers written entirely without HAL, targeting the STM32F411CE (Black Pill) on ARM Cortex-M4.</p>
+        <ul class="project-bullets">
+          <li>GPIO configuration, pull-up/pull-down, alternate function mapping &amp; atomic BSRR operations</li>
+          <li>EXTI interrupt handling with NVIC priority configuration</li>
+          <li>Expanding to SPI, UART/USART, and I2C peripheral drivers</li>
+        </ul>
+        <div class="project-footer">
+          <span class="chip">C</span>
+          <span class="chip">ARM Cortex-M4</span>
+          <span class="chip">Bare-metal</span>
+          <a class="gh-link" href="https://github.com/abhib03" target="_blank">↗ GitHub</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3>FreeRTOS UART Command Console — STM32F411</h3>
+          <div class="project-date">Oct – Nov 2025</div>
+        </div>
+        <p class="project-desc">Real-time command-line interface over UART using FreeRTOS multitasking on the STM32F411.</p>
+        <ul class="project-bullets">
+          <li>Dedicated tasks for UART reception, command parsing, and system monitoring</li>
+          <li>Runtime commands: LED control, system status, and diagnostic reporting</li>
+        </ul>
+        <div class="project-footer">
+          <span class="chip">FreeRTOS</span>
+          <span class="chip">UART</span>
+          <span class="chip">STM32</span>
+          <a class="gh-link" href="https://github.com/abhib03" target="_blank">↗ GitHub</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3>Neonatal Monitoring System — Raspberry Pi</h3>
+          <div class="project-date">Jun – Jul 2025</div>
+        </div>
+        <p class="project-desc">Real-time multi-sensor monitoring system for neonatal vitals on Raspberry Pi Zero 2W.</p>
+        <ul class="project-bullets">
+          <li>MAX30102 (SpO2/HR), MPU6050 (motion), DS18B20 (temperature) via I2C &amp; 1-Wire</li>
+          <li>Continuous data acquisition and processing for clinical monitoring</li>
+        </ul>
+        <div class="project-footer">
+          <span class="chip">Raspberry Pi</span>
+          <span class="chip">I2C</span>
+          <span class="chip">1-Wire</span>
+          <span class="chip">Python</span>
+          <a class="gh-link" href="https://github.com/abhib03" target="_blank">↗ GitHub</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-label">Contact</div>
+    <div class="contact-grid">
+      <a class="contact-item" href="mailto:bharadwajabhishek300@gmail.com">
+        <div class="contact-icon">✉</div>
+        <div>
+          <div class="contact-meta">Email</div>
+          <div class="contact-val">bharadwajabhishek300@gmail.com</div>
+        </div>
+      </a>
+      <a class="contact-item" href="https://github.com/abhib03" target="_blank">
+        <div class="contact-icon">⎇</div>
+        <div>
+          <div class="contact-meta">GitHub</div>
+          <div class="contact-val">github.com/abhib03</div>
+        </div>
+      </a>
+      <a class="contact-item" href="https://linkedin.com/in/abhishekbharadwaj03" target="_blank">
+        <div class="contact-icon">in</div>
+        <div>
+          <div class="contact-meta">LinkedIn</div>
+          <div class="contact-val">linkedin.com/in/abhishekbharadwaj03</div>
+        </div>
+      </a>
+      <a class="contact-item" href="tel:+917907424425">
+        <div class="contact-icon">✆</div>
+        <div>
+          <div class="contact-meta">Phone</div>
+          <div class="contact-val">+91 79074 24425</div>
+        </div>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>Abhishek Bharadwaj · Mysuru, Karnataka · Built with HTML &amp; CSS</p>
+</footer>
+
+</body>
+</html>
